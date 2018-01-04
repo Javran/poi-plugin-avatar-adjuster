@@ -4,7 +4,8 @@
   "description": "Avatar Adjuster",
   "main": "index.es",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint '**/*.es'"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,6 @@
   },
   "dependencies": {
     "shallowequal": "^1.0.2",
-    "subtender": "^0.10.1"
+    "subtender": "^0.12.4"
   }
 }
