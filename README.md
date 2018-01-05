@@ -7,3 +7,5 @@ changes will be saved automatically to `data/p-state.json`.
 
 load `p-state.json` as an Object and `shipAvatar` property should contain
 all marginMagics.
+
+or alternatively `window.dumpMarginMagics()` can be used to dump content of marginMagics as well.

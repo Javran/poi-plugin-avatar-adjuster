@@ -55,6 +55,13 @@ const getMarginMagicFuncSelector = createSelector(
     (mstId in mm) ? mm[mstId] : defaultMarginMagic
 )
 
+window.dumpMarginMagics = () => {
+  const {getStore} = window
+  const state = getStore()
+  // eslint-disable-next-line no-console
+  console.log(JSON.stringify(marginMagicsSelector(state)))
+}
+
 export {
   shipMstIdsSelector,
   extSelector,
