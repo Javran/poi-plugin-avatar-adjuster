@@ -41,6 +41,7 @@
     "mocha": "^3.3.0"
   },
   "dependencies": {
+    "react-ultimate-pagination": "^1.0.3",
     "shallowequal": "^1.0.2",
     "subtender": "^0.12.4"
   }

@@ -1,11 +1,11 @@
 import { createStructuredSelector } from 'reselect'
 import React, { PureComponent } from 'react'
-import { Pagination } from 'react-bootstrap'
 import { connect } from 'react-redux'
 
 import { shipMstIdsSelector } from '../selectors'
 import { PTyp } from '../ptyp'
 import { ShipAvatarControl } from './ship-avatar-control'
+import { UPagination } from './u-pagination'
 
 const itemsPerPage = 20
 
@@ -33,21 +33,14 @@ class AvatarAdjusterImpl extends PureComponent {
     const focusingMstIds = mstIds.slice(beginInd, endInd+1)
 
     const pgComponent = (
-      <Pagination
+      <UPagination
         style={{
           marginBottom: '1em',
           alignSelf: 'center',
         }}
-        items={pageRange}
-        activePage={activePage}
-        prev
-        next
-        first
-        last
-        ellipsis
-        boundaryLinks
-        maxButtons={5}
-        onSelect={this.handleSelectPage}
+        currentPage={activePage}
+        totalPages={pageRange}
+        onChange={this.handleSelectPage}
       />
     )
 
