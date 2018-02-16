@@ -4,7 +4,6 @@ import { Pagination } from 'react-bootstrap'
 import { createUltimatePagination, ITEM_TYPES } from 'react-ultimate-pagination'
 
 /* eslint-disable react/prop-types */
-
 const UPagination = props => {
   const {style, ...propsRemaining} = props
   return createUltimatePagination({
