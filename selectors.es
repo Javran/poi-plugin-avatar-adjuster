@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import { createSelector } from 'reselect'
 import { constSelector, extensionSelectorFactory } from 'views/utils/selectors'
-import { initState, defaultControlLock, defaultMarginMagic } from './store'
+import { initState, defaultControlLock, defaultMarginMagic, defaultBacks } from './store'
 
 const shipMstIdsSelector = createSelector(
   constSelector,
@@ -43,6 +43,11 @@ const marginMagicsSelector = createSelector(
   sa => sa.marginMagics
 )
 
+const backsSelector = createSelector(
+  shipAvatarSelector,
+  sa => sa.backs
+)
+
 const getControlLockFuncSelector = createSelector(
   controlLocksSelector,
   controlLocks => mstId =>
@@ -55,11 +60,37 @@ const getMarginMagicFuncSelector = createSelector(
     (mstId in mm) ? mm[mstId] : defaultMarginMagic
 )
 
-window.dumpMarginMagics = () => {
+const getBacksFuncSelector = createSelector(
+  backsSelector,
+  (backs = {}) => mstId =>
+    (mstId in backs) ? backs[mstId] : defaultBacks
+)
+
+window.dumpData = () => {
   const {getStore} = window
-  const state = getStore()
+  const dump = shipAvatarSelector(getStore())
+  if (dump.marginMagics) {
+    Object.keys(dump.marginMagics).forEach(key => {
+      if (dump.marginMagics[key].damaged === 0.555) {
+        delete dump.marginMagics[key].damaged
+      }
+      if (dump.marginMagics[key].normal === 0.555) {
+        delete dump.marginMagics[key].normal
+      }
+      if (Object.keys(dump.marginMagics[key]).length === 0) {
+        delete dump.marginMagics[key]
+      }
+    })
+  }
+  if (dump.backs) {
+    Object.keys(dump.backs).forEach(key => {
+      if (dump.backs[key] === 0) {
+        delete dump.marginMagics[key]
+      }
+    })
+  }
   // eslint-disable-next-line no-console
-  console.log(JSON.stringify(marginMagicsSelector(state)))
+  console.log(JSON.stringify(dump))
 }
 
 export {
@@ -70,4 +101,5 @@ export {
   readySelector,
   getControlLockFuncSelector,
   getMarginMagicFuncSelector,
+  getBacksFuncSelector,
 }

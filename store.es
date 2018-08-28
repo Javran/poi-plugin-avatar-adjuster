@@ -7,6 +7,7 @@ import { store } from 'views/create-store'
 
 const defaultControlLock = true
 const defaultMarginMagic = {normal: 0.555, damaged: 0.555}
+const defaultBacks = 0
 
 const initState = {
   ui: {
@@ -16,6 +17,8 @@ const initState = {
   shipAvatar: {
     // marginMagics[mstId] = {normal, damaged}, default to defaultMarginMagic
     marginMagics: {},
+    // backs[mstId] = <number>, default to defaultBacks
+    backs: {},
   },
 }
 
@@ -61,6 +64,18 @@ const actionCreators = {
         )
       )
     ),
+  modifyBacks: (mstId, data) =>
+    actionCreators.modify(
+      modifyObject(
+        'shipAvatar',
+        modifyObject(
+          'backs',
+          modifyObject(
+            mstId, () => data
+          )
+        )
+      )
+    ),
 }
 
 const mapDispatchToProps = dispatch =>
@@ -73,6 +88,7 @@ export {
   initState,
   defaultControlLock,
   defaultMarginMagic,
+  defaultBacks,
   reducer,
   actionCreators,
   mapDispatchToProps,

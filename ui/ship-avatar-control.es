@@ -2,7 +2,7 @@ import _ from 'lodash'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { Avatar } from 'views/components/etc/avatar'
-import { Button } from 'react-bootstrap'
+import { Button, FormControl } from 'react-bootstrap'
 import FontAwesome from 'react-fontawesome'
 import { modifyObject } from 'subtender'
 
@@ -12,7 +12,10 @@ import { mapDispatchToProps } from '../store'
 import {
   getControlLockFuncSelector,
   getMarginMagicFuncSelector,
+  getBacksFuncSelector,
 } from '../selectors'
+
+const rank = ['  ', 'c1', 'c2', 'c3', 'r1', 'r2', 'sr1', 'sr2', 'sr3']
 
 class ShipAvatarControlImpl extends PureComponent {
   static propTypes = {
@@ -58,6 +61,7 @@ class ShipAvatarControlImpl extends PureComponent {
           <Avatar
             mstId={mstId} height={60}
             marginMagic={marginMagic.normal}
+            rank={this.props.back || null}
           />
         </div>
         <div
@@ -69,18 +73,37 @@ class ShipAvatarControlImpl extends PureComponent {
           <Avatar
             mstId={mstId} height={60} isDamaged
             marginMagic={marginMagic.damaged}
+            rank={this.props.back || null}
           />
         </div>
         <Button
           onClick={() => toggleControlLock(mstId)}
           style={{
-            gridArea: '1 / 2 / span 2 / span 1',
+            gridArea: '1 / 2 / span 1 / span 1',
             justifySelf: 'center', alignSelf: 'center',
             height: '3em',
           }}
         >
           <FontAwesome name={controlLock ? 'link' : 'unlink'} />
         </Button>
+        <FormControl componentClass="select"
+          value={this.props.back}
+          style={{
+            gridArea: '2 / 2 / span 1 / span 1',
+            justifySelf: 'center', alignSelf: 'center',
+            height: '3em',
+            width: 43,
+          }}
+          onChange={e => this.props.modifyBacks(mstId, parseInt(e.target.value))}
+          >
+            {
+              new Array(9).fill(0).map((a, i) => (
+                <option key={i} value={i}>
+                  {rank[i]}
+                </option>
+              ))
+            }
+          </FormControl>
         <div
           style={{
             gridArea: '1 / 3 / span 1 / span 1',
@@ -130,6 +153,7 @@ const ShipAvatarControl = connect(
     return {
       controlLock: getControlLockFuncSelector(state)(mstId),
       marginMagic: getMarginMagicFuncSelector(state)(mstId),
+      back: getBacksFuncSelector(state)(mstId),
     }
   },
   mapDispatchToProps
